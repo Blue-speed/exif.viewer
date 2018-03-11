@@ -72,7 +72,7 @@ jobs:
                 at: ~/terraform
             - run: |
                 cd terraform/
-                export TF_VAR_artifactPath=~/terraform/zip/${ARTIFACT_NAME}.zip
+                export TF_VAR_artifactPath=~/terraform/zip/Drewgle-exif-viewer.zip
                 export TF_VAR_stageName=${DEPLOY_STAGE_NAME}
                 terraform init -input=false
                 terraform destroy -input=false -force ./
