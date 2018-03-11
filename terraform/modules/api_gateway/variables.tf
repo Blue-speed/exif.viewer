@@ -14,3 +14,19 @@ variable "stageName" {
     type = "string"
     description = "The stage to deploy to"
 }
+variable "route53ZoneId" {
+    type = "string"
+    description = "Zone Id for the domain to use"
+}
+variable "fqdn" {
+    type = "string"
+    description = "Fully qualified Domain Name"
+}
+variable "certificateArn" {
+    type = "string"
+    description = "Arn of the Https Certificate of the FQDN"
+}
+variable "gatewayName" {
+    type = "string"
+    description = "The api gateway name"
+}

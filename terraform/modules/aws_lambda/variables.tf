@@ -10,3 +10,15 @@ variable "terraformTagValue" {
     type = "string"
     description = "The tag value to add to the lambda function"
 }
+variable "functionName" {
+    type = "string"
+}
+variable "subnet_ids" {
+    type = "list"
+}
+variable "security_group_ids" {
+    type = "list"
+}
+variable "functionHandler" {
+    type = "string"
+}

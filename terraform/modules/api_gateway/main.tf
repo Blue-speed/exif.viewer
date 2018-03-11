@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "ApiGateway" {
-  name        = "Drewgle-exif-viewer"
+  name        = "${var.gatewayName}"
 }
 
 resource "aws_api_gateway_resource" "proxy" {
@@ -48,13 +48,19 @@ resource "aws_lambda_permission" "apigw_lambda" {
   source_arn    = "arn:aws:execute-api:${var.region}:${var.accountId}:${aws_api_gateway_rest_api.ApiGateway.id}/*/*/*"
 }
 
+resource "aws_api_gateway_base_path_mapping" "ApiDomainMapping" {
+  api_id      = "${aws_api_gateway_rest_api.ApiGateway.id}"
+  stage_name  = "${aws_api_gateway_deployment.ApiDeployment.stage_name}"
+  domain_name = "${aws_api_gateway_domain_name.ApiDomain.domain_name}"
+}
+
 resource "aws_api_gateway_domain_name" "ApiDomain" {
-  domain_name = "images.drewgle.me"
-  certificate_arn = "arn:aws:acm:us-east-1:115338466642:certificate/428367e3-1583-415f-8827-dd7bbcf6fc35"
+  domain_name = "${var.fqdn}"
+  certificate_arn = "${var.certificateArn}"
 }
 
 resource "aws_route53_record" "ApiCName" {
-  zone_id = "ZW040HD0W8EVI" # See aws_route53_zone for how to create this
+  zone_id = "${var.route53ZoneId}"
 
   name = "${aws_api_gateway_domain_name.ApiDomain.domain_name}"
   type = "A"
