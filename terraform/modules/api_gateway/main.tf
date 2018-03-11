@@ -11,7 +11,6 @@ resource "aws_api_gateway_method" "ApiRootMethod" {
 
 resource "aws_api_gateway_integration" "ApiRootIntegration" {
   rest_api_id             = "${aws_api_gateway_rest_api.ApiGateway.id}"
-  resource_id             = "${aws_api_gateway_resource.root.id}"
   http_method             = "${aws_api_gateway_method.ApiRootMethod.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
@@ -22,7 +21,6 @@ resource "aws_api_gateway_integration" "ApiRootIntegration" {
 
 resource "aws_api_gateway_integration_response" "ApiIntegrationRootResponse" {
     rest_api_id = "${aws_api_gateway_rest_api.ApiGateway.id}"
-    resource_id = "${aws_api_gateway_resource.root.id}"
     http_method = "${aws_api_gateway_integration.ApiRootIntegration.http_method}"
     status_code = "200"
 }
