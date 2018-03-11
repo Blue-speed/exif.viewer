@@ -29,7 +29,7 @@ resource "aws_api_gateway_integration_response" "ApiIntegrationProxyResponse" {
 }
 
 resource "aws_api_gateway_deployment" "ApiDeployment" {
-  depends_on = ["aws_api_gateway_method.ApiProxyMethod","aws_api_gateway_method.ApiRootMethod", "aws_api_gateway_integration.ApiProxyIntegration", "aws_api_gateway_integration.ApiRootIntegration" ]
+  depends_on = ["aws_api_gateway_method.ApiProxyMethod", "aws_api_gateway_integration.ApiProxyIntegration" ]
   rest_api_id = "${aws_api_gateway_rest_api.ApiGateway.id}"
   stage_name = "${var.stageName}"
   description = "Api gateway for  ${var.gatewayName}"
