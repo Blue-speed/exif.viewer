@@ -12,8 +12,8 @@ resource "aws_lambda_function" "Lambda" {
     }
   }
   vpc_config = {
-    subnet_ids = ["subnet-3d5b0e10", "subnet-9a5820b7"]
-    security_group_ids = ["sg-3d07d741"]
+    subnet_ids = ["subnet-dec1c4f4", "subnet-28e9ec70", "subnet-cb5fedc7", "subnet-1134ba74"]
+    security_group_ids = ["sg-d152bdab"]
   }
   tags = {
     "Terraform" = "${var.terraformTagValue}"

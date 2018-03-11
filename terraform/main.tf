@@ -15,7 +15,6 @@ module "lambdaFunction" {
   source = "./modules/aws_lambda"
   artifactPath = "${var.artifactPath}"
   role_arn = "${var.role}"
-  bucket = "${var.bucket}"
   terraformTagValue = "${var.terraformTagValue}"
 }
 
