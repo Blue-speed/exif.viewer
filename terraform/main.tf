@@ -5,14 +5,14 @@ provider "aws" {
 data "terraform_remote_state" "master_state" {
   backend = "s3"
   config {
-    bucket = "issuetrak-deployment-development"
-    key    = "issuetrak-web-forms-service/terraform/isc_state/terraform.tfstate"
+    bucket = "bluespeed-terraform"
+    key    = "exif-viewer"
     region = "us-east-1"
   }
 }
 
 module "lambdaFunction" {
-  source = "../modules/aws_lambda"
+  source = "./modules/aws_lambda"
   artifactPath = "${var.artifactPath}"
   role_arn = "${var.role}"
   bucket = "${var.bucket}"
@@ -20,7 +20,7 @@ module "lambdaFunction" {
 }
 
 module "apiProxy" {
-  source = "../modules/api_gateway"
+  source = "./modules/api_gateway"
   lambdaArn = "${module.lambdaFunction.arn}"
   region = "${var.region}"
   accountId = "${var.accountId}"

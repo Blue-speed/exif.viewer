@@ -18,10 +18,10 @@ variable "terraformTagValue" {
 
 variable "role" {
   type = "string"
-  default = "arn:aws:iam::128098058984:role/ISC_Role"
+  default = "arn:aws:iam::115338466642:role/AwsLambda"
 }
 
 variable "accountId" {
   type = "string"
-  default = "128098058984"
+  default = "115338466642"
 }

@@ -34,7 +34,7 @@ jobs:
             - attach_workspace:
                 at: ~/terraform
             - run: | 
-                cd terraform/testing
+                cd terraform/
                 export TF_VAR_artifactPath=~/terraform/zip/${ARTIFACT_NAME}.zip
                 export TF_VAR_stageName=${DEPLOY_STAGE_NAME}
                 terraform get 
@@ -45,7 +45,7 @@ jobs:
                 paths:
                     - terraform/
             - store_artifacts:
-                path: ./terraform/testing/terraform.plan
+                path: ./terraform/terraform.plan
                 destination: terraform.plan
     deploy:
         docker:
@@ -58,7 +58,7 @@ jobs:
             - attach_workspace:
                 at: ~/terraform
             - run: |
-                cd terraform/testing
+                cd terraform/
                 export TF_VAR_artifactPath=~/terraform/zip/${ARTIFACT_NAME}.zip
                 export TF_VAR_stageName=${DEPLOY_STAGE_NAME}
                 terraform init -input=false
