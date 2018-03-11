@@ -15,7 +15,7 @@ module "lambdaFunction" {
   artifactPath = "${var.artifactPath}"
   role_arn = "${var.role}"
   terraformTagValue = "${var.terraformTagValue}"
-  functionName = "Drewgle-exif-viewer"
+  functionName = "Drewgle"
   subnet_ids = ["subnet-dec1c4f4", "subnet-28e9ec70", "subnet-cb5fedc7", "subnet-1134ba74"]
   security_group_ids = ["sg-d152bdab"]
   functionHandler = "exif.viewer::exif.viewer.LambdaEntryPoint::FunctionHandlerAsync"
@@ -28,7 +28,7 @@ module "apiProxy" {
   accountId = "${var.accountId}"
   stageName = "${var.stageName}"
   route53ZoneId = "ZW040HD0W8EVI"
-  fqdn = "images.drewgle.me"
+  fqdn = "drewgle.me"
   certificateArn = "arn:aws:acm:us-east-1:115338466642:certificate/428367e3-1583-415f-8827-dd7bbcf6fc35"
-  gatewayName = "Drewgle-exif-viewer"
+  gatewayName = "Drewgle"
 }

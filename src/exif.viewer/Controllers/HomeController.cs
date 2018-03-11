@@ -15,39 +15,13 @@ namespace exif.viewer.Controllers
         // GET api/values
         public IActionResult  Index()
         {
-            return View("Index", new ExifDataModel());
+            return View("Index");
         }
 
         [HttpPost]
-        public IActionResult Index(IFormFile file)
+        public IActionResult Index(string query)
         {
-            try {
-                var image = Image.Load(file.OpenReadStream());
-                return View("Index",new ExifDataModel{ ExifData = image.MetaData.ExifProfile.Values.ToDictionary(m => m.Tag.ToString(), m => m.Value)});
-            } catch (Exception ex) {
-                return View("Index", new ExifDataModel{ 
-                    ExifData = new Dictionary<string,object>{ 
-                        {"error", ex.Message }, 
-                        {"FileName", file.Name}, 
-                        {"contentType", file.ContentType},
-                        {"contentLength", file.Length},
-                        {"Headers", String.Join(',', file.Headers.Select(m => $"{m.Key}: {m.Value}"))}
-                    }
-                });
-            }
-        }
-
-        [HttpPost]
-        private FileStreamResult Clear(IFormFile file)
-        {
-            var image = Image.Load(file.OpenReadStream());
-            image.MetaData.Properties.Clear();
-            image.MetaData.ExifProfile = new SixLabors.ImageSharp.MetaData.Profiles.Exif.ExifProfile();
-            using(Stream stream = new MemoryStream()){
-                var imageFormat = ImageFormats.Png;
-                image.Save(stream, imageFormat);
-                return File(stream, ImageFormats.Png.DefaultMimeType);
-            }
+            return View("SearchResults", System.Web.HttpUtility.UrlEncode(query));
         }
 
         public IActionResult Error()

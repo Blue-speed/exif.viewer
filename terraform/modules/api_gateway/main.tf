@@ -24,7 +24,7 @@ resource "aws_api_gateway_integration" "ApiProxyIntegration" {
   integration_http_method = "POST"
   passthrough_behavior    = "WHEN_NO_MATCH"
   uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${var.lambdaArn}/invocations"
-
+  content_handling        = "CONVERT_TO_TEXT"
 }
 
 resource "aws_api_gateway_integration_response" "ApiIntegrationProxyResponse" {

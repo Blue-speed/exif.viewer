@@ -1,18 +1,10 @@
-@model ExifDataModel
 @{
+    ViewData["Title"] = "Drewgle";
 }
 
-<h1 class="text-danger">Display all EXIF Data for image</h1>
+<h1 class="text">Drewgle</h1>
 
 <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Index">
-    <input type="file" name="file"/>
-    <input type="submit" name="Submit" />
+    <input type="text" name="query"/>
+    <input type="submit" name="Search" value="Search"/>
 </form>
-@if(Model.HasData) {
-    <h2> Exif Data </h2>
-    <ul>
-    @foreach(var pair in Model.ExifData) {
-        <li><b>@pair.Key</b>:@pair.Value.ToString()</li>
-    }
-    </ul>
-}
