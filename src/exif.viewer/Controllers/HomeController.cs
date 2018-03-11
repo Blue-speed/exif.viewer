@@ -12,17 +12,17 @@ using Microsoft.Net.Http.Headers;
 
 namespace exif.viewer.Controllers
 {
-    [Route("")]
+    [Route("Home")]
     public class HomeController : Controller
     {
         // GET api/values
-        [HttpGet]
+        [HttpGet("Index")]
         public ActionResult Get()
         {
             return View("Index");
         }
 
-        [HttpPost]
+        [HttpPost("Index")]
         public Dictionary<string,object> Post(IFormFile file)
         {
             
