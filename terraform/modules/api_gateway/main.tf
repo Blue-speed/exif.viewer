@@ -50,6 +50,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
 
 resource "aws_api_gateway_domain_name" "ApiDomain" {
   domain_name = "images.drewgle.me"
+  certificate_arn = "arn:aws:acm:us-east-1:115338466642:certificate/428367e3-1583-415f-8827-dd7bbcf6fc35"
 }
 
 resource "aws_route53_record" "ApiCName" {
