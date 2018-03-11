@@ -45,7 +45,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
   action        = "lambda:InvokeFunction"
   function_name = "${var.lambdaArn}"
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${var.region}:${var.accountId}:${aws_api_gateway_rest_api.ApiGateway.id}/*/*/*"
+  source_arn    = "arn:aws:execute-api:${var.region}:${var.accountId}:${aws_api_gateway_rest_api.ApiGateway.id}/*"
 }
 
 resource "aws_api_gateway_base_path_mapping" "ApiDomainMapping" {
