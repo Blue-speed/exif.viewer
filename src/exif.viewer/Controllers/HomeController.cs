@@ -25,7 +25,15 @@ namespace exif.viewer.Controllers
                 var image = Image.Load(file.OpenReadStream());
                 return View("Index",new ExifDataModel{ ExifData = image.MetaData.ExifProfile.Values.ToDictionary(m => m.Tag.ToString(), m => m.Value)});
             } catch (Exception ex) {
-                return View("Index", new ExifDataModel{ ExifData = new Dictionary<string,object>{ {"error", ex.Message }, {"FileName", file.Name}, {"contentType", file.ContentType}}});
+                return View("Index", new ExifDataModel{ 
+                    ExifData = new Dictionary<string,object>{ 
+                        {"error", ex.Message }, 
+                        {"FileName", file.Name}, 
+                        {"contentType", file.ContentType},
+                        {"contentLength", file.Length},
+                        {"Headers", String.Join(',', file.Headers.Select(m => $"{m.Key}: {m.Value}"))}
+                    }
+                });
             }
         }
 
