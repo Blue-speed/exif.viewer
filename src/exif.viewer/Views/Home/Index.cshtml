@@ -1,10 +1,18 @@
-@page
+@model ExifDataModel
 @{
 }
 
-<h1 class="text-danger">Home Page</h1>
+<h1 class="text-danger">Display all EXIF Data for image</h1>
 
-<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="">
+<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Inxex">
     <input type="file" name="file"/>
     <input type="submit" name="Submit" />
 </form>
+@if(Model.HasData) {
+    <h2> Exif Data </h2>
+    <ul>
+    @foreach(var pair in Model.ExifData) {
+        <li><b>@pair.Key</b>:@pair.Value.ToString()</li>
+    }
+    </ul>
+}

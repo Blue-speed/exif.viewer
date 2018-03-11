@@ -1,37 +1,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using SixLabors.ImageSharp;
-
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Net.Http.Headers;
+using exif.viewer.Models;
+using System.Diagnostics;
 
 namespace exif.viewer.Controllers
 {
-    [Route("Home")]
     public class HomeController : Controller
     {
         // GET api/values
-        [HttpGet("Index")]
-        public ActionResult Get()
+        public IActionResult  Index()
         {
-            return View("Index");
+            return View("Index", new ExifDataModel());
         }
 
-        [HttpPost("Index")]
-        public Dictionary<string,object> Post(IFormFile file)
+        [HttpPost]
+        public IActionResult Index(IFormFile file)
         {
             
             var image = Image.Load(file.OpenReadStream());
-            return image.MetaData.ExifProfile.Values.ToDictionary(m => m.Tag.ToString(), m => m.Value);
+            return View("Index",new ExifDataModel{ ExifData = image.MetaData.ExifProfile.Values.ToDictionary(m => m.Tag.ToString(), m => m.Value)});
         }
 
-        [HttpPost("Clear")]
-        private FileStreamResult CleanImage(IFormFile file)
+        [HttpPost]
+        private FileStreamResult Clear(IFormFile file)
         {
             var image = Image.Load(file.OpenReadStream());
             image.MetaData.Properties.Clear();
@@ -41,6 +37,11 @@ namespace exif.viewer.Controllers
                 image.Save(stream, imageFormat);
                 return File(stream, ImageFormats.Png.DefaultMimeType);
             }
+        }
+
+        public IActionResult Error()
+        {
+            return View(new ErrorModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
