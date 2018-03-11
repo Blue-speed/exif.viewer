@@ -63,6 +63,20 @@ jobs:
                 export TF_VAR_stageName=${DEPLOY_STAGE_NAME}
                 terraform init -input=false
                 terraform apply -input=false terraform.plan
+    destroy:
+        docker:
+            - image: marcelocorreia/terraform:0.10.3
+        working_directory: ~/terraform
+        steps:
+            - attach_workspace:
+                at: ~/terraform
+            - run: |
+                cd terraform/
+                export TF_VAR_artifactPath=~/terraform/zip/${ARTIFACT_NAME}.zip
+                export TF_VAR_stageName=${DEPLOY_STAGE_NAME}
+                terraform init -input=false
+                terraform destroy -input=false terraform.plan
+
 workflows:
     version: 2
     build_and_test:
@@ -77,3 +91,13 @@ workflows:
                 filters:
                     branches:
                         only: master
+            - hold:
+                type: approval
+                requires:
+                    - plan
+                filters:
+                    branches:
+                        only: master
+            - destroy:
+                requires:
+                    - hold
