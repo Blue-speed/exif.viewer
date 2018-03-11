@@ -21,9 +21,12 @@ namespace exif.viewer.Controllers
         [HttpPost]
         public IActionResult Index(IFormFile file)
         {
-            
-            var image = Image.Load(file.OpenReadStream());
-            return View("Index",new ExifDataModel{ ExifData = image.MetaData.ExifProfile.Values.ToDictionary(m => m.Tag.ToString(), m => m.Value)});
+            try {
+                var image = Image.Load(file.OpenReadStream());
+                return View("Index",new ExifDataModel{ ExifData = image.MetaData.ExifProfile.Values.ToDictionary(m => m.Tag.ToString(), m => m.Value)});
+            } catch (Exception ex) {
+                return View("Index", new Dictionary<string,string>{ {"error", ex.Message }, {"FileName", file.Name}, {"contentType", file.ContentType}});
+            }
         }
 
         [HttpPost]
